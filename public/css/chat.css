@@ -1,0 +1,65 @@
+img{
+  max-width: 150px;
+  max-height: 150px;
+  width: auto;
+  height: auto;
+}
+
+.minimal-input{
+  border: none;
+  text-align: center;
+  font-family: 'ZCOOL XiaoWei', serif;
+}
+.minimal-input::placeholder {
+  text-align: center;
+  transition: color .2s ease;
+}
+.minimal-input:focus::placeholder{
+  color: transparent;
+}
+.control::before{
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  height: 1px;
+  background: rgba(0,0,0,.5);
+  width: 0;
+  transform: translate(-50%, -50%);
+  transition: width .2s ease;
+}
+.control::after{
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  height: 0px;
+  background: rgba(0,0,0,.5);
+  width: 0;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: all .4s ease;
+}
+.control:focus-within::before{
+  content: '';
+  width: 80%;
+}
+.control:focus-within::after{
+  content: 'press enter to send';
+  width: 80%;
+  opacity: .4;
+}
+.msg-area{
+  max-height: 50vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.msg-area::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.btn-hidden{
+  display: none;
+}

@@ -1,0 +1,29 @@
+extends layout.pug
+
+block title
+  title Chatverse - #{room}
+
+block styles
+  link(rel="stylesheet", href="/css/chat.css")
+
+block content
+  main
+    section.hero.is-fullheight
+      .hero-body
+        .container.has-text-centered
+          .columns
+            .column.is-6.is-offset-3
+              .msg-area(id='msg-area')
+              .feedback(id='feedback')
+          .columns
+            .column.is-6.is-offset-3
+              .msg-form-cont
+                form(id='msg-form' autocomplete="off")
+                  .field
+                    .control.is-expanded
+                      input.input.is-shadowless.minimal-input(type="text" name="message" placeholder='Click here and write' id='message')
+
+
+block scripts
+  script(src="/socket.io/socket.io.js")
+  script(src="/js/chat-io.js")

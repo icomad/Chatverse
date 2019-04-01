@@ -1,0 +1,16 @@
+{
+  "name": "chatverse",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "author": "Federico Madaffari <icomad@me.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "express": "^4.16.4",
+    "pug": "^2.0.3",
+    "socket.io": "^2.2.0"
+  }
+}
