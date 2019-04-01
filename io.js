@@ -6,7 +6,10 @@ module.exports = server => {
   io.on('connection', socket => {
     socket.on('joinRoom', room => {
       socket.join(room);
-      socket.broadcast.to(room).emit('userJoined');
+      const roomObj = io.sockets.adapter.rooms[room];
+      let usersInRoom = roomObj.length;
+      socket.emit('usersCount', usersInRoom)
+      socket.broadcast.to(room).emit('userJoined', usersInRoom);
 
       socket.on('typing', (isTyping) => {
         socket.broadcast.to(room).emit('typing', isTyping);
@@ -17,8 +20,8 @@ module.exports = server => {
       });
 
       socket.on('disconnect', () => {
-        socket.leave(room);
-        io.to(room).emit('userLeft');
+        usersInRoom = roomObj ? roomObj.length : 0;
+        io.to(room).emit('userLeft', usersInRoom);
       });
     });
   });

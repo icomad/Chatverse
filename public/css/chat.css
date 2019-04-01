@@ -5,17 +5,40 @@ img{
   height: auto;
 }
 
+.handle-form-cont{
+  opacity: 1;
+}
+.handle-form-cont-hide{
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+
+.msg-form-cont{
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+}
+.msg-form-cont-show{
+  visibility: visible;
+  opacity: 1;
+  height: auto;
+  transition: opacity .3s ease;
+}
+
+
 .minimal-input{
   border: none;
   text-align: center;
-  font-family: 'ZCOOL XiaoWei', serif;
+  font-family: 'Montserrat', serif;
 }
 .minimal-input::placeholder {
   text-align: center;
-  transition: color .2s ease;
+  opacity: 1;
+  color: #444;
 }
 .minimal-input:focus::placeholder{
-  color: transparent;
+  opacity: 0;
+  transition: opacity 1s ease;
 }
 .control::before{
   content: '';
@@ -23,18 +46,18 @@ img{
   top: 100%;
   left: 50%;
   height: 1px;
-  background: rgba(0,0,0,.5);
+  background: #999;
   width: 0;
   transform: translate(-50%, -50%);
-  transition: width .2s ease;
+  transition: all .3s ease;
 }
-.control::after{
+.control-text::after{
   content: '';
   position: absolute;
   top: 100%;
   left: 50%;
   height: 0px;
-  background: rgba(0,0,0,.5);
+  background: #999;
   width: 0;
   opacity: 0;
   transform: translate(-50%, -50%);
@@ -44,22 +67,25 @@ img{
   content: '';
   width: 80%;
 }
-.control:focus-within::after{
+.control-text:focus-within::after{
   content: 'press enter to send';
   width: 80%;
   opacity: .4;
 }
 .msg-area{
-  max-height: 50vh;
+  max-height: 40vh;
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  transition: height .3s ease;
 }
 .msg-area::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
-.btn-hidden{
-  display: none;
+
+.nav-el{
+  font-size: smaller;
+  color: #444;
 }

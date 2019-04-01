@@ -5,7 +5,9 @@ var vNotify = (function () {
     topRight: 'topRight',
     bottomLeft: 'bottomLeft',
     bottomRight: 'bottomRight',
-    center: 'center'
+    bottomCenter: 'bottomCenter',
+    center: 'center',
+    centerRight: 'centerRight'
   };
 
   var options = {
@@ -162,8 +164,12 @@ var vNotify = (function () {
         return 'vn-bottom-right';
       case positionOption.bottomLeft:
         return 'vn-bottom-left';
+      case positionOption.bottomCenter:
+        return 'vn-bottom-center';
       case positionOption.center:
         return 'vn-center';
+      case positionOption.centerRight:
+        return 'vn-center-right';
       default:
         return 'vn-top-right';
     }
