@@ -11,8 +11,8 @@ require('./io')(server);
 
 app.get('/', (req, res) => res.render('home'));
 app.get('/:room', (req, res) => {
-  if (/[^A-Za-z0-9#-]+/g.test(req.params.room)) {
-    return res.render('error', { error: 'ERROR! You can use only (a-z)(A-Z)(0-9)(#)(-) characters in room name' });
+  if (/[^A-Za-z0-9]+/g.test(req.params.room)) {
+    return res.render('error', { error: 'ERROR! You can use only (a-z)(A-Z)(0-9) characters in room name' });
   }
   return res.render('chat', { room: req.params.room });
 });

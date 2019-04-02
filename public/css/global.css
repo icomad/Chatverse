@@ -5,3 +5,8 @@
 .hero{
   transition: background .4s ease, color .4s ease;
 }
+
+.nav-el{
+  font-size: smaller;
+  color: inherit;
+}

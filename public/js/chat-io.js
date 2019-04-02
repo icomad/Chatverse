@@ -4,8 +4,16 @@ const socket = io();
 const msgArea = document.getElementById('msg-area');
 const feedback = document.getElementById('feedback');
 const msgTemplate = (msg, color, align, from) => {
-  const user = from ? `<sub style="font-size: .6rem">${from}</sub>` : ``;
-  return `<p style="color: ${color};text-align:${align}">${msg} ${user}</p>`;
+  const p = document.createElement('p');
+  const sub = document.createElement('sub');
+  p.textContent = msg + ' ';
+  p.style.textAlign = align;
+  p.style.color = color;
+  sub.textContent = from;
+  sub.style.fontSize = '.6rem';
+  p.appendChild(sub);
+  msgArea.appendChild(p);
+  msgArea.scrollTop = msgArea.scrollHeight;
 }
 
 const msgFormContainer = document.getElementById('msg-form-cont');
@@ -79,6 +87,16 @@ handleForm.addEventListener('submit', e => {
     handle.setAttribute('placeholder', 'Invalid character, use only (A-Za-z0-9) - Click me');
     return handle.blur();
   }
+  if (colors.hasOwnProperty(handle.value)) {
+    handle.value = '';
+    handle.setAttribute('placeholder', 'Username already in use! - Click me');
+    return handle.blur();
+  }
+  if (handle.value.length > 16) {
+    handle.value = '';
+    handle.setAttribute('placeholder', 'Username must be less than 12 characters! - Click me');
+    return handle.blur();
+  }
   handle.blur();
   handleFormContainer.classList.add('handle-form-cont-hide');
   let showTimeout = setTimeout(() => {
@@ -105,24 +123,32 @@ msgForm.addEventListener('submit', (e) => {
   if (msg.text === '' || msg.text.trim() === '') return;
   socket.emit('sentMsg', msg);
   convo.push(msg);
-  msgArea.innerHTML += msgTemplate(msgInput.value, 'inherit', 'right', null);
-  msgArea.scrollTop = msgArea.scrollHeight;
+  msgTemplate(msgInput.value, 'inherit', 'right', null);
   msgInput.value = '';
 });
 
 socket.on('typing', (isTyping) => {
   const color = document.getElementById('page').classList.contains('is-black') ? 'rgba(255,255,255,.4)' : 'rgba(0,0,0,.4)';
-  feedback.innerHTML = isTyping ? msgTemplate('<em><small>Someone is typing...</small></em>', color, 'center') : '';
+  const p = document.createElement('p');
+  const em = document.createElement('em');
+  const small = document.createElement('small');
+  p.style.color = color;
+  p.style.textAlign = 'center';
+  small.textContent = 'Someone is typing...';
+  p.appendChild(em);
+  em.appendChild(small);
+  feedback.innerHTML = '';
+  if (isTyping) {
+    feedback.appendChild(p);
+  }
 });
 
 socket.on('incomingMsg', msg => {
   convo.push(msg);
   feedback.innerHTML = '';
-  //const color = `rgb(${Math.random() * 256}, ${Math.random() * 256}, ${Math.random() * 256})`;
-  const hsl = `hsl(${Math.random() * 400}, 100%, 45%);`
+  const hsl = `hsl(${Math.floor(Math.random() * 400)}, 100%, 45%)`
   if (!colors.hasOwnProperty(msg.from)) colors[msg.from] = hsl;
-  msgArea.innerHTML += msgTemplate(msg.text, colors[msg.from], 'left', msg.from);
-  msgArea.scrollTop = msgArea.scrollHeight;
+  msgTemplate(msg.text, colors[msg.from], 'left', msg.from);
 });
 
 convoDl.addEventListener('click', e => {
@@ -137,5 +163,4 @@ convoDl.addEventListener('click', e => {
   document.body.appendChild(downloadAnchorNode);
   downloadAnchorNode.click();
   downloadAnchorNode.remove();
-  //console.log(convo);
 });

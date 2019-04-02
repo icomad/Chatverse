@@ -5,7 +5,22 @@ block styles
 
 block content
   main
-    section.hero.is-fullheight
+    section.hero.is-fullheight(id='page')
+      .hero-head
+        nav.level.is-mobile
+          .level-item.has-text-centered
+            .theme
+              a.nav-el(id='change-theme') Lights off
+          .level-item.has-text-centered
+            .rooms
+              a.nav-el(id='rooms') Current rooms
       .hero-body
         .container.has-text-centered
-          h1.title So long, partner. 
+            h1.title Chatverse
+            p.subtitle 
+              | A minimal non persistent real time chat application. 
+              br
+              | Join a room by writing its name in the pathname of the url, choose a username and start chatting. 
+              br
+              | Changin room or refreshing the page will delete all your messages.
+            a.button.is-rounded.is-text.is-small(href="/all") ex: http://localhost:8000/all to join room named 'all'

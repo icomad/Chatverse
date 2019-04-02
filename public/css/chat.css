@@ -67,7 +67,7 @@ input::-webkit-credentials-auto-fill-button {
   transform: translate(-50%, -50%);
   transition: all .3s ease;
 }
-.control-text::after{
+.control::after{
   content: '';
   position: absolute;
   top: 100%;
@@ -83,7 +83,7 @@ input::-webkit-credentials-auto-fill-button {
   content: '';
   width: 80%;
 }
-.control-text:focus-within::after{
+.control:focus-within::after{
   content: 'press enter to send';
   width: 80%;
   opacity: .4;
@@ -99,9 +99,4 @@ input::-webkit-credentials-auto-fill-button {
 .msg-area::-webkit-scrollbar {
   width: 10px;
   height: 10px;
-}
-
-.nav-el{
-  font-size: smaller;
-  color: inherit;
 }
