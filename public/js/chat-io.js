@@ -18,8 +18,11 @@ let typingTimeout;
 
 const usersCountSpan = document.getElementById('users-count');
 
+const convoDl = document.getElementById('convo-dl');
+
 let colors = {};
 let username;
+let convo = [];
 
 const onTypingEnd = () => {
   socket.emit("typing", false);
@@ -99,22 +102,40 @@ msgForm.addEventListener('submit', (e) => {
     text: msgInput.value,
     from: handle.value,
   };
-
+  if (msg.text === '' || msg.text.trim() === '') return;
   socket.emit('sentMsg', msg);
-  msgArea.innerHTML += msgTemplate(msgInput.value, 'black', 'right', null);
+  convo.push(msg);
+  msgArea.innerHTML += msgTemplate(msgInput.value, 'inherit', 'right', null);
   msgArea.scrollTop = msgArea.scrollHeight;
   msgInput.value = '';
 });
 
 socket.on('typing', (isTyping) => {
-  feedback.innerHTML = isTyping ? msgTemplate('<em><small>Someone is typing...</small></em>', 'rgba(0,0,0,.2)', 'center') : '';
+  const color = document.getElementById('page').classList.contains('is-black') ? 'rgba(255,255,255,.4)' : 'rgba(0,0,0,.4)';
+  feedback.innerHTML = isTyping ? msgTemplate('<em><small>Someone is typing...</small></em>', color, 'center') : '';
 });
 
 socket.on('incomingMsg', msg => {
+  convo.push(msg);
   feedback.innerHTML = '';
-  const color = `rgb(${Math.random() * 256}, ${Math.random() * 256}, ${Math.random() * 256})`;
-  if (!colors.hasOwnProperty(msg.from)) colors[msg.from] = color;
+  //const color = `rgb(${Math.random() * 256}, ${Math.random() * 256}, ${Math.random() * 256})`;
+  const hsl = `hsl(${Math.random() * 400}, 100%, 45%);`
+  if (!colors.hasOwnProperty(msg.from)) colors[msg.from] = hsl;
   msgArea.innerHTML += msgTemplate(msg.text, colors[msg.from], 'left', msg.from);
   msgArea.scrollTop = msgArea.scrollHeight;
 });
 
+convoDl.addEventListener('click', e => {
+  const convoToDl = convo.map((msg, index) => {
+    msg.index = index;
+    return msg;
+  });
+  let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(convoToDl));
+  const downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute('href', dataStr);
+  downloadAnchorNode.setAttribute('download', 'convo.json');
+  document.body.appendChild(downloadAnchorNode);
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+  //console.log(convo);
+});

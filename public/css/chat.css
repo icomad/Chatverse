@@ -5,6 +5,21 @@ img{
   height: auto;
 }
 
+input{
+  cursor: pointer;
+}
+input:focus, input:active{
+  cursor: text;
+}
+
+input::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}
+
 .handle-form-cont{
   opacity: 1;
 }
@@ -25,20 +40,21 @@ img{
   transition: opacity .3s ease;
 }
 
-
 .minimal-input{
+  background: none;
   border: none;
   text-align: center;
   font-family: 'Montserrat', serif;
+  color: inherit;
 }
 .minimal-input::placeholder {
   text-align: center;
   opacity: 1;
-  color: #444;
+  color: inherit;
 }
 .minimal-input:focus::placeholder{
   opacity: 0;
-  transition: opacity 1s ease;
+  transition: opacity .4s ease;
 }
 .control::before{
   content: '';
@@ -87,5 +103,5 @@ img{
 
 .nav-el{
   font-size: smaller;
-  color: #444;
+  color: inherit;
 }
