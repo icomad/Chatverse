@@ -9,7 +9,7 @@ app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, '/public')));
 require('./io')(server);
 
-app.get('/', (req, res) => res.render('home'));
+app.get('/', (req, res) => res.render('home', { host: req.hostname }));
 app.get('/:room', (req, res) => {
   if (/[^A-Za-z0-9]+/g.test(req.params.room)) {
     return res.render('error', { error: 'ERROR! You can use only (a-z)(A-Z)(0-9) characters in room name' });
